@@ -24,6 +24,8 @@ new Vue({
     return {
       counties: [],
       vaccine_sites: [],
+      available_sites: [],
+      vaccine_sites_default:[],
       vaccine_sites_default:[]
     }
   },
@@ -40,18 +42,12 @@ new Vue({
 
 
     axios.get('https://newjersey.github.io/nj-vaccine-scraper/data.json').then(response => {
+
           this.vaccine_sites_default = response;
           this.vaccine_sites = this.vaccine_sites_default.data;
-          this.vaccine_sites.map( function(a,b){
-            if(a.official != undefined){
-              console.log(a.official['County'])
 
-              self.counties.push(a.official['County'])
-            };
+            this.setFilter()
 
-          })
-          self.counties = [...new Set(self.counties)];
-          self.counties.sort((a,b) => (b < a) ? 1 : ((a < b) ? -1 : 0));
     });
 
 
@@ -60,26 +56,62 @@ new Vue({
 
 
   },
-    formatDate(dateString) {
-      const date = new Date(dateString)
-      return date.toLocaleDateString(process.env.lang) || ''
-    },
-    changeCounty($event)
-    {
-      self = this;
-      console.log($event.target.value);
-      const tempc =[];
-      this.vaccine_sites_default.data.map( function(a,b){
-        if(a.official ){
-          if(a.official['County'] == $event.target.value)
-          {
-            tempc.push(a);
-          }
+
+  setFilter(){
+      this.vaccine_sites.map( function(a,b){
+
+        if(a.official != undefined){
+          self.counties.push(a.official['County'])
         };
+        if(a.available != undefined){
+          self.available_sites.push(a.available)
+        };
+
       })
-      console.log(tempc);
-      this.vaccine_sites = tempc;
-    }
+      self.counties = [...new Set(self.counties)];
+      self.available_sites = [...new Set(self.available_sites)];
+      self.counties.sort((a,b) => (b < a) ? 1 : ((a < b) ? -1 : 0));
+    },
+      reset() {
+        this.vaccine_sites = this.vaccine_sites_default.data;
+        this.setFilter()
+      },
+      formatDate(dateString) {
+        const date = new Date(dateString)
+        return date.toLocaleDateString(process.env.lang) || ''
+      },
+      changeCounty($event)
+      {
+        self = this;
+        console.log($event.target.value);
+        const tempc =[];
+        this.vaccine_sites_default.data.map( function(a,b){
+          if(a.official ){
+            if(a.official['County'] == $event.target.value)
+            {
+              tempc.push(a);
+            }
+          };
+        })
+        console.log(tempc);
+        this.vaccine_sites = tempc;
+      },
+      changeAvail($event)
+      {
+        self = this;
+        console.log($event.target.value);
+        const tempc =[];
+        this.vaccine_sites_default.data.map( function(a,b){
+          if(a.available ){
+            if(a.available == $event.target.value)
+            {
+              tempc.push(a);
+            }
+          };
+        })
+        console.log(tempc);
+        this.vaccine_sites = tempc;
+      }
   }
 
 
