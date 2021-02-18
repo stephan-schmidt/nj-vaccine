@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  
+
 
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -22,19 +22,76 @@
   <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/axios/0.8.1/axios.min.js'></script>
   <script src="https://momentjs.com/downloads/moment.js"></script>
   <script src="https://momentjs.com/downloads/moment-timezone-with-data.js"></script>
   <script src="https://kit.fontawesome.com/f713a12e61.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
 
+  <style>
+  /* Sample `apply` at-rules with Tailwind CSS
+  .container {
+  @apply min-h-screen flex justify-center items-center text-center mx-auto;
+  }
+  */
+  .container {
+    margin: 0 auto;
+    min-height: 100vh;
+    /* display: flex; */
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 
+  }
+  .header
+  {
+    padding-top: 10px;
+    padding-left: 10px;
+    flex: 1 100%;
+    height: 100px;
+    background-color: #609E09;
+    flex-direction: row;
+    /* background-image: url('https://smarter.nj.gov/images/nj-state-logo-white.png'); */
+    background-repeat: no-repeat;
+  }
+
+  .title {
+    font-family:
+      'Quicksand',
+      'Source Sans Pro',
+      -apple-system,
+      BlinkMacSystemFont,
+      'Segoe UI',
+      Roboto,
+      'Helvetica Neue',
+      Arial,
+      sans-serif;
+    display: block;
+    font-weight: 300;
+    font-size: 60px;
+    color: #35495e;
+    letter-spacing: 1px;
+    flex: 1 100%;
+  }
+
+  .subtitle {
+    font-weight: 300;
+    font-size: 42px;
+    color: #526488;
+    word-spacing: 5px;
+    padding-bottom: 15px;
+  }
+
+  .links {
+    padding-top: 15px;
+  }
+  </style>
 
 </head>
 
 <body class="homepage">
 
-  <template>
 
   <div class="container">
 
@@ -60,32 +117,31 @@
 </select>
       </div>
 
-      </ul>
       <div class="flex flex-col h-screen">
           <div class="flex-grow overflow-auto">
             <table class="relative w-full border">
               <thead>
                 <tr>
-                  <th class="sticky top-0 px-2 py-2 text-red-900 bg-red-300">AVAILABLE</th>
-                  <th class="sticky top-0 px-2 py-2 text-red-900 bg-red-300">Facility Name</th>
-                  <th class="sticky top-0 px-2 py-2 text-red-900 bg-red-300">Facility Address</th>
-                  <th class="sticky top-0 px-2 py-2 text-red-900 bg-red-300">County</th>
-                  <th class="sticky top-0 px-2 py-2 text-red-900 bg-red-300">Minimum Age</th>
-                  <th class="sticky top-0 px-2 py-2 text-red-900 bg-red-300">Phone Number</th>
-                  <th class="sticky top-0 px-2 py-2 text-red-900 bg-red-300">Facility Website</th>
+                  <th class="sticky top-0 px-2 py-1 text-red-900 bg-red-300">AVAILABLE</th>
+                  <th class="sticky top-0 px-2 py-1 text-red-900 bg-red-300">Facility Name</th>
+                  <th class="sticky top-0 px-2 py-1 text-red-900 bg-red-300">Facility Address</th>
+                  <th class="sticky top-0 px-2 py-1 text-red-900 bg-red-300">County</th>
+                  <th class="sticky top-0 px-2 py-1 text-red-900 bg-red-300">Minimum Age</th>
+                  <th class="sticky top-0 px-2 py-1 text-red-900 bg-red-300">Phone Number</th>
+                  <th class="sticky top-0 px-2 py-1 text-red-900 bg-red-300">Facility Website</th>
 
                 </tr>
               </thead>
               <tbody class="divide-y bg-red-100">
 
                 <tr v-for="(item, index) in vaccine_sites">
-                   <td class="px-2 py-2 text-center">{{ item.available }}</td>
-                   <td class="px-2 py-2 text-center">{{ item.name }}</td>
-                   <td class="px-2 py-2 text-center" v-for="(value, name) in item.official" v-if="name=='Facility Address'">{{ value }}</td>
-                   <td class="px-2 py-2 text-center" v-for="(value, name) in item.official" v-if="name=='County'">{{ value }}</td>
-                   <td class="px-2 py-2 text-center" v-for="(value, name) in item.official" v-if="name=='Minimum Age'">{{ value }}</td>
-                   <td class="px-2 py-2 text-center" v-for="(value, name) in item.official" v-if="name=='Phone Number for Appointments + Questions'">{{ value }}</td>
-                   <td class="px-2 py-2 text-center" v-for="(value, name) in item.official" v-if="name=='Facility Website'"><a :href="value">{{ value }}</a></td>
+                   <td class="px-1 py-1 text-center">{{ item.available }}</td>
+                   <td class="px-1 py-1 text-center">{{ item.name }}</td>
+                   <td class="px-1 py-1 text-center" v-for="(value, name) in item.official" v-if="name=='Facility Address'">{{ value }}</td>
+                   <td class="px-1 py-1 text-center" v-for="(value, name) in item.official" v-if="name=='County'">{{ value }}</td>
+                   <td class="px-1 py-1 text-center" v-for="(value, name) in item.official" v-if="name=='Minimum Age'">{{ value }}</td>
+                   <td class="px-1 py-1 text-center" v-for="(value, name) in item.official" v-if="name=='Phone Number for Appointments + Questions'">{{ value }}</td>
+                   <td class="px-1 py-1 text-center" v-for="(value, name) in item.official" v-if="name=='Facility Website'"><a :href="value">{{ value }}</a></td>
                 </tr>
               </tbody>
             </table>
@@ -113,7 +169,7 @@
       </div> -->
     </div>
   </div>
-</template>
+
 </body>
 
 
