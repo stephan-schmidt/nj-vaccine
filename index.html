@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+
+  <title>NJ Vaccine</title>
+    <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image">
+
+
+  <link href="/images/favicon.ico" rel="shortcut icon">
+  <link rel="stylesheet" href="css/styles.css">
+  <!-- <link rel="stylesheet" href="css/wp-styles.css"> -->
+
+  <link rel="stylesheet" href="https://use.typekit.net/kad3hcl.css">
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <script src="https://momentjs.com/downloads/moment.js"></script>
+  <script src="https://momentjs.com/downloads/moment-timezone-with-data.js"></script>
+  <script src="https://kit.fontawesome.com/f713a12e61.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+
+</head>
+
+<body class="homepage">
+
+  <template>
+
+  <div class="container">
+
+
+    <div class="header">
+      <img src="https://smarter.nj.gov/images/nj-state-logo-white.png" width="80px" alt="">
+    </div>
+    <div>
+      <!-- <Logo /> -->
+      <h3 class="title">
+        New Jersey Vaccine Availability
+      </h3>
+      <div style="text-align:left">
+        <p>  How to use this site:</p>
+        <ul>
+        <li>1. Select your County with the dropdown below</li>
+        <li>2. Scroll down to see a list of vaccine sites with available appointments. This information is updated regularly.</li>
+        <li>3. Reach out to convenient locations to schedule an appointment.</li>
+      </ul>
+      <select class="form-control"  @change="changeCounty($event)">
+  <option value="" selected disabled>Choose</option>
+  <option v-for="county in counties" :value="county" :key="county">{{ county }}</option>
+</select>
+      </div>
+
+      </ul>
+      <div class="flex flex-col h-screen">
+          <div class="flex-grow overflow-auto">
+            <table class="relative w-full border">
+              <thead>
+                <tr>
+                  <th class="sticky top-0 px-2 py-2 text-red-900 bg-red-300">AVAILABLE</th>
+                  <th class="sticky top-0 px-2 py-2 text-red-900 bg-red-300">Facility Name</th>
+                  <th class="sticky top-0 px-2 py-2 text-red-900 bg-red-300">Facility Address</th>
+                  <th class="sticky top-0 px-2 py-2 text-red-900 bg-red-300">County</th>
+                  <th class="sticky top-0 px-2 py-2 text-red-900 bg-red-300">Minimum Age</th>
+                  <th class="sticky top-0 px-2 py-2 text-red-900 bg-red-300">Phone Number</th>
+                  <th class="sticky top-0 px-2 py-2 text-red-900 bg-red-300">Facility Website</th>
+
+                </tr>
+              </thead>
+              <tbody class="divide-y bg-red-100">
+
+                <tr v-for="(item, index) in vaccine_sites">
+                   <td class="px-2 py-2 text-center">{{ item.available }}</td>
+                   <td class="px-2 py-2 text-center">{{ item.name }}</td>
+                   <td class="px-2 py-2 text-center" v-for="(value, name) in item.official" v-if="name=='Facility Address'">{{ value }}</td>
+                   <td class="px-2 py-2 text-center" v-for="(value, name) in item.official" v-if="name=='County'">{{ value }}</td>
+                   <td class="px-2 py-2 text-center" v-for="(value, name) in item.official" v-if="name=='Minimum Age'">{{ value }}</td>
+                   <td class="px-2 py-2 text-center" v-for="(value, name) in item.official" v-if="name=='Phone Number for Appointments + Questions'">{{ value }}</td>
+                   <td class="px-2 py-2 text-center" v-for="(value, name) in item.official" v-if="name=='Facility Website'"><a :href="value">{{ value }}</a></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+
+      <!-- <div class="links">
+        <a
+          href="https://nuxtjs.org/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="button--green"
+        >
+          Documentation
+        </a>
+        <a
+          href="https://github.com/nuxt/nuxt.js"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="button--grey"
+        >
+          GitHub
+        </a>
+      </div> -->
+    </div>
+  </div>
+</template>
+</body>
+
+
+<script src='https://unpkg.com/vue@2.0.3/dist/vue.js'></script>
+<script src="https://unpkg.com/vue-meta/dist/vue-meta.min.js"></script>
+<script src="js/njvac.js"></script>
+
+</html>
