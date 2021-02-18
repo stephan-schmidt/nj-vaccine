@@ -27,7 +27,15 @@ new Vue({
       vaccine_sites_default:[]
     }
   },
-  async fetch() {
+    created: function created() {
+    
+
+    this.fetch();
+
+  },
+
+  methods: {
+    fetch() {
     self = this;
     this.vaccine_sites_default = await this.$axios.get('https://newjersey.github.io/nj-vaccine-scraper/data.json')
     this.vaccine_sites = this.vaccine_sites_default.data;
@@ -44,8 +52,6 @@ new Vue({
     self.counties = [...new Set(self.counties)];
     self.counties.sort((a,b) => (b < a) ? 1 : ((a < b) ? -1 : 0));
   },
-
-  methods: {
     formatDate(dateString) {
       const date = new Date(dateString)
       return date.toLocaleDateString(process.env.lang) || ''
